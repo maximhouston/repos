@@ -69,7 +69,7 @@ int main(void)
 	while (1 == 1)
 	{
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET); //col1
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET); ///נממכנאמנמכ
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 		
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8,  GPIO_PIN_RESET);  
