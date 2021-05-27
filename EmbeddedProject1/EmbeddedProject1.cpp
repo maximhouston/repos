@@ -90,8 +90,6 @@ void col3Work()
 
 void pressKey(uint32_t col, uint32_t row)
 {
-	initCol();
-	initRow();
 	if (col == 1 && row == 1) {
 		col1Work();
 		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_SET)
@@ -127,8 +125,10 @@ int main(void)
 	HAL_Init();
 	__GPIOA_CLK_ENABLE();
 	__GPIOB_CLK_ENABLE();
+	initCol();
+	initRow();
 	while (true)
-	pressKey(1, 2);
+		pressKey(1, 2);
 	
 }
 
