@@ -94,28 +94,28 @@ void pressKey(uint32_t col, uint32_t row)
 		col1Work();
 		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_SET)
 		{
-			sss = '1';
+			sss = 1;
 		}
 	}
 	else if (col == 2 && row == 1) {
 		col2Work();
 		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_SET)
 		{
-			sss = '2';
+			sss = 2;
 		} 			
 	}
 	else if (col == 3 && row == 1) {
 		col3Work();
 		if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8) == GPIO_PIN_SET)
 		{
-			sss = '3';
+			sss = 3;
 		}
 	}		
 	else if (col == 1 && row == 2) {
 		col1Work();
 		if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_15) == GPIO_PIN_SET)
 		{
-			sss = '4';
+			sss = 4;
 		}
 	}
 }
