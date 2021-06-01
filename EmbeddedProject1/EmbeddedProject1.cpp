@@ -10,6 +10,7 @@ void SysTick_Handler(void)
 	HAL_IncTick();
 	HAL_SYSTICK_IRQHandler();
 }
+using namespace std;
 
 uint8_t sss = 0;
 
@@ -62,6 +63,32 @@ void initRow()
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+	GPIO_InitStructure.Pin = GPIO_PIN_12;    //cancel  PB12
+	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+	GPIO_InitStructure.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+	GPIO_InitStructure.Pin = GPIO_PIN_13;     //sos PB13
+	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+	GPIO_InitStructure.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);	
+
+	GPIO_InitStructure.Pin = GPIO_PIN_15;      //call PA15
+	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+	GPIO_InitStructure.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);	
+	
+	GPIO_InitStructure.Pin = GPIO_PIN_3;       //call PB3
+	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+	GPIO_InitStructure.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);		
+	
+	
 }
 
 
@@ -101,26 +128,86 @@ void pressKey(uint32_t col, uint32_t row)
 	switch (col)
 	{
 		case 1: 
-		col1Work();
-		if (row == 1) 
-		{
-			sss = ReadPin(GPIOA, GPIO_PIN_8, 1);
-		}	
-		else if (row == 2) 
-		{
-			sss = ReadPin(GPIOB, GPIO_PIN_15, 4);
-		}			
-		else if (row == 3) 
-		{
-			sss = ReadPin(GPIOA, GPIO_PIN_12, 7);
-		}	
-		break;
-		case 2:
+			col1Work();
+			if (row == 1) 
+			{
+				//sss = ReadPin(GPIOA, GPIO_PIN_8, 1);
+			}	
+			else if (row == 2) 
+			{
+				sss = ReadPin(GPIOB, GPIO_PIN_15, 4);
+			}			
+			else if (row == 3) 
+			{
+				sss = ReadPin(GPIOA, GPIO_PIN_12, 7);
+			}	
 			break;
-			
+		case 2:
+			col2Work();
+			if (row == 1){ 
+				//sss = ReadPin(GPIOA, GPIO_PIN_8, 2);
+			}
+			else if (row == 2) 
+			{
+				sss = ReadPin(GPIOB, GPIO_PIN_15, 5);
+			}
+			else if (row == 3) 
+			{
+				sss = ReadPin(GPIOA, GPIO_PIN_12, 8);
+			}
+			else if (row == 4) 
+			{
+				sss = ReadPin(GPIOB, GPIO_PIN_14, 00);
+			}		
+			break;
 		case 3:
+			col3Work();
+			if (row == 1) { 
+				//sss = ReadPin(GPIOA, GPIO_PIN_8, 3);
+			}
+			else if (row == 2) 
+			{
+				sss = ReadPin(GPIOB, GPIO_PIN_15, 6);
+			}
+			else if (row == 3) 
+			{
+				sss = ReadPin(GPIOA, GPIO_PIN_12, 9);
+			}				
 			break;
 	}
+}
+
+enum str_code {
+	eCancel,
+	eSos,
+	eCall,
+	eConcierge,
+};
+
+str_code hashit(string const& inString) {
+	if (inString == "Cancel") return eCancel;
+	if (inString == "Sos") return eSos;
+	if (inString == "Call") return eCall;	
+	if (inString == "Concierge") return eConcierge;		
+}
+void pressKey(string row)
+{
+	switch (hashit(row))
+	{
+		case eCancel:
+			sss = ReadPin(GPIOB, GPIO_PIN_12, 777); 
+		break;
+		case eSos:
+			sss = ReadPin(GPIOB, GPIO_PIN_13, 112); 
+		break;
+		case eCall:
+			sss = ReadPin(GPIOA, GPIO_PIN_15, 888); 
+		break;	
+		case eConcierge:
+			sss = ReadPin(GPIOB, GPIO_PIN_3, 999); 
+		break;				
+	}
+	
 }
 
 int main(void)
@@ -132,9 +219,20 @@ int main(void)
 	initCol();
 	initRow();
 	while (true) {
-		pressKey(1, 1);
-		pressKey(1, 2);
-		pressKey(1, 3);		
+		pressKey(1, 1);  // 1
+		pressKey(1, 2);  // 4
+		pressKey(1, 3);	 // 7
+		pressKey(2, 1);	 // 2
+		pressKey(2, 2);	 // 5
+		pressKey(2, 3);  // 8
+		pressKey(2, 4);  // 0				
+		pressKey(3, 1);  // 3
+		pressKey(3, 2);  // 6
+		pressKey(3, 3);  // 9
+		pressKey("Cancel");
+		pressKey("Sos");	
+		pressKey("Call");
+		pressKey("Concierge");			
 	}
 	
 }
