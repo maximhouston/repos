@@ -19,19 +19,19 @@ GPIO_InitTypeDef GPIO_InitStructure;
 
 void initCol()
 {
-	GPIO_InitStructure.Pin = GPIO_PIN_2;   //col1  PB2
+	GPIO_InitStructure.Pin = GPIO_PIN_2;    //col1  PB2
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.Pin = GPIO_PIN_1;   //col2 PB1
+	GPIO_InitStructure.Pin = GPIO_PIN_1;    //col2 PB1
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.Pin = GPIO_PIN_15;   //col3  PC15
+	GPIO_InitStructure.Pin = GPIO_PIN_15;    //col3  PC15
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
@@ -40,78 +40,77 @@ void initCol()
 
 void initRow()
 {
-	GPIO_InitStructure.Pin = GPIO_PIN_8;   //row1 PA8
+	GPIO_InitStructure.Pin = GPIO_PIN_8;    //row1 PA8
 	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.Pin = GPIO_PIN_15;   //row2 PB15
+	GPIO_InitStructure.Pin = GPIO_PIN_15;    //row2 PB15
 	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.Pin = GPIO_PIN_12;   //row3 PA12
+	GPIO_InitStructure.Pin = GPIO_PIN_12;    //row3 PA12
 	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.Pin = GPIO_PIN_14;   //row4  PB14
+	GPIO_InitStructure.Pin = GPIO_PIN_14;    //row4  PB14
 	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.Pin = GPIO_PIN_12;    //cancel  PB12
+	GPIO_InitStructure.Pin = GPIO_PIN_12;     //cancel  PB12
 	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.Pin = GPIO_PIN_13;     //sos PB13
+	GPIO_InitStructure.Pin = GPIO_PIN_13;      //sos PB13
 	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);	
 
-	GPIO_InitStructure.Pin = GPIO_PIN_15;      //call PA15
+	GPIO_InitStructure.Pin = GPIO_PIN_15;       //call PA15
 	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);	
 	
-	GPIO_InitStructure.Pin = GPIO_PIN_3;       //call PB3
+	GPIO_InitStructure.Pin = GPIO_PIN_3;        //call PB3
 	GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);		
-	
-	
 }
 
 
 void col1Work()
 {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);    
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1 | GPIO_PIN_15, GPIO_PIN_RESET);
+	HAL_Delay(100);
+	
 }
 
 void col2Work()
 {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);   
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET); //col2
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);	
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2 | GPIO_PIN_15, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);   //col2
+	HAL_Delay(100);
 }
 
 
 void col3Work()
 {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);   
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET); 
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);	//col3
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1 | GPIO_PIN_2, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET); 	//col3
+	HAL_Delay(100);
 }
 
 
@@ -127,53 +126,54 @@ void pressKey(uint32_t col, uint32_t row)
 {
 	switch (col)
 	{
-		case 1: 
-			col1Work();
-			if (row == 1) 
-			{
-				//sss = ReadPin(GPIOA, GPIO_PIN_8, 1);
-			}	
-			else if (row == 2) 
-			{
-				sss = ReadPin(GPIOB, GPIO_PIN_15, 4);
-			}			
-			else if (row == 3) 
-			{
-				sss = ReadPin(GPIOA, GPIO_PIN_12, 7);
-			}	
+	case 1:
+		col1Work();
+		switch (row)
+		{
+		case 1:
+			sss = ReadPin(GPIOA, GPIO_PIN_8, 1);
 			break;
 		case 2:
-			col2Work();
-			if (row == 1){ 
-				//sss = ReadPin(GPIOA, GPIO_PIN_8, 2);
-			}
-			else if (row == 2) 
-			{
-				sss = ReadPin(GPIOB, GPIO_PIN_15, 5);
-			}
-			else if (row == 3) 
-			{
-				sss = ReadPin(GPIOA, GPIO_PIN_12, 8);
-			}
-			else if (row == 4) 
-			{
-				sss = ReadPin(GPIOB, GPIO_PIN_14, 00);
-			}		
+			sss = ReadPin(GPIOB, GPIO_PIN_15, 4);
 			break;
 		case 3:
-			col3Work();
-			if (row == 1) { 
-				//sss = ReadPin(GPIOA, GPIO_PIN_8, 3);
-			}
-			else if (row == 2) 
-			{
-				sss = ReadPin(GPIOB, GPIO_PIN_15, 6);
-			}
-			else if (row == 3) 
-			{
-				sss = ReadPin(GPIOA, GPIO_PIN_12, 9);
-			}				
+			sss = ReadPin(GPIOA, GPIO_PIN_12, 7);
 			break;
+		}
+		break;
+	case 2:
+		col2Work();
+		switch (row)
+		{
+		case 1:
+			sss = ReadPin(GPIOA, GPIO_PIN_8, 2);
+			break;
+		case 2:
+			sss = ReadPin(GPIOB, GPIO_PIN_15, 5);
+			break;
+		case 3:
+			sss = ReadPin(GPIOA, GPIO_PIN_12, 8);
+			break;
+		case 4:
+			sss = ReadPin(GPIOB, GPIO_PIN_14, 00);
+			break;			
+		}		
+		break;
+	case 3:
+		col3Work();
+		switch (row)
+		{
+		case 1:
+			sss = ReadPin(GPIOA, GPIO_PIN_8, 3);
+			break;
+		case 2:
+			sss = ReadPin(GPIOB, GPIO_PIN_15, 6);
+			break;
+		case 3:
+			sss = ReadPin(GPIOA, GPIO_PIN_12, 9);
+			break;		
+		}			
+		break;
 	}
 }
 
@@ -194,17 +194,17 @@ void pressKey(string row)
 {
 	switch (hashit(row))
 	{
-		case eCancel:
-			sss = ReadPin(GPIOB, GPIO_PIN_12, 777); 
+	case eCancel:
+		sss = ReadPin(GPIOB, GPIO_PIN_12, 777); 
 		break;
-		case eSos:
-			sss = ReadPin(GPIOB, GPIO_PIN_13, 112); 
+	case eSos:
+		sss = ReadPin(GPIOB, GPIO_PIN_13, 112); 
 		break;
-		case eCall:
-			sss = ReadPin(GPIOA, GPIO_PIN_15, 888); 
+	case eCall:
+		sss = ReadPin(GPIOA, GPIO_PIN_15, 888); 
 		break;	
-		case eConcierge:
-			sss = ReadPin(GPIOB, GPIO_PIN_3, 999); 
+	case eConcierge:
+		sss = ReadPin(GPIOB, GPIO_PIN_3, 999); 
 		break;				
 	}
 	
@@ -218,17 +218,17 @@ int main(void)
 	__GPIOC_CLK_ENABLE();
 	initCol();
 	initRow();
-	while (true) {
+	while (1) {
 		pressKey(1, 1);  // 1
-		pressKey(1, 2);  // 4
-		pressKey(1, 3);	 // 7
+		pressKey(1, 2);   // 4
+		pressKey(1, 3); 	 // 7
 		pressKey(2, 1);	 // 2
-		pressKey(2, 2);	 // 5
-		pressKey(2, 3);  // 8
-		pressKey(2, 4);  // 0				
-		pressKey(3, 1);  // 3
-		pressKey(3, 2);  // 6
-		pressKey(3, 3);  // 9
+		pressKey(2, 2); 	 // 5
+		pressKey(2, 3);   // 8
+		pressKey(2, 4);   // 0				
+	 pressKey(3, 1);  // 3
+		pressKey(3, 2);   // 6
+		pressKey(3, 3);   // 9
 		pressKey("Cancel");
 		pressKey("Sos");	
 		pressKey("Call");
