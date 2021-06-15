@@ -17,6 +17,7 @@ uint8_t sss = 0;
 GPIO_InitTypeDef GPIO_InitStructure;
 
 
+
 void initCol()
 {
 	GPIO_InitStructure.Pin = GPIO_PIN_2;    //col1  PB2
@@ -92,23 +93,25 @@ void initRow()
 
 void col1Work()
 {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1 | GPIO_PIN_15, GPIO_PIN_RESET);
-	HAL_Delay(100);
-	
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1,  GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2,  GPIO_PIN_SET); //col1
+	HAL_Delay(100);	
 }
 
 void col2Work()
 {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2 | GPIO_PIN_15, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);   //col2
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2,  GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);	
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1,  GPIO_PIN_SET);   //col2
 	HAL_Delay(100);
 }
 
 
 void col3Work()
 {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1 | GPIO_PIN_2, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET); 	//col3
 	HAL_Delay(100);
 }
@@ -178,33 +181,28 @@ void pressKey(uint32_t col, uint32_t row)
 }
 
 enum str_code {
-	eCancel,
-	eSos,
-	eCall,
-	eConcierge,
+	eCancel = 111,
+	eSos = 112,
+	eCall = 113,
+	eConcierge = 114,
 };
 
-str_code hashit(string const& inString) {
-	if (inString == "Cancel") return eCancel;
-	if (inString == "Sos") return eSos;
-	if (inString == "Call") return eCall;	
-	if (inString == "Concierge") return eConcierge;		
-}
-void pressKey(string row)
+void pressKey(uint32_t row)
 {
-	switch (hashit(row))
+	HAL_Delay(100);
+	switch (row)
 	{
 	case eCancel:
-		sss = ReadPin(GPIOB, GPIO_PIN_12, 777); 
+		sss = ReadPin(GPIOB, GPIO_PIN_12, 111); 
 		break;
 	case eSos:
 		sss = ReadPin(GPIOB, GPIO_PIN_13, 112); 
 		break;
 	case eCall:
-		sss = ReadPin(GPIOA, GPIO_PIN_15, 888); 
+		sss = ReadPin(GPIOA, GPIO_PIN_15, 113); 
 		break;	
 	case eConcierge:
-		sss = ReadPin(GPIOB, GPIO_PIN_3, 999); 
+		sss = ReadPin(GPIOB, GPIO_PIN_3, 114); 
 		break;				
 	}
 	
@@ -219,20 +217,21 @@ int main(void)
 	initCol();
 	initRow();
 	while (1) {
-		pressKey(1, 1);  // 1
-		pressKey(1, 2);   // 4
-		pressKey(1, 3); 	 // 7
-		pressKey(2, 1);	 // 2
-		pressKey(2, 2); 	 // 5
-		pressKey(2, 3);   // 8
-		pressKey(2, 4);   // 0				
-	 pressKey(3, 1);  // 3
-		pressKey(3, 2);   // 6
-		pressKey(3, 3);   // 9
-		pressKey("Cancel");
-		pressKey("Sos");	
-		pressKey("Call");
-		pressKey("Concierge");			
+	  pressKey(1, 1);  // 1
+	  pressKey(1, 2);   // 4
+	  pressKey(1, 3); 	 // 7
+	  pressKey(2, 1);	 // 2
+	  pressKey(2, 2); 	 // 5
+	  pressKey(2, 3);   // 8
+	  pressKey(2, 4);   // 0				
+	  pressKey(3, 1);  // 3
+	  pressKey(3, 2);   // 6
+	  pressKey(3, 3);   // 9
+      pressKey(eCancel);
+	  pressKey(eSos);	
+	  pressKey(eCall);
+	  pressKey(eConcierge);	
+
 	}
 	
 }
